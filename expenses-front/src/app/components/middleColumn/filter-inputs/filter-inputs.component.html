@@ -1,0 +1,37 @@
+<div>
+  <div class="flex flex-row">
+    <input
+      type="date"
+      class="cursor-pointer my-auto p-2 flex-1 border rounded bg-white mr-1"
+      name="date-start"
+      [(ngModel)]="currentFilter.startDate"
+      (change)="verifyDate(true, $event)"
+    />
+    <input
+      type="date"
+      class="cursor-pointer my-auto p-2 flex-1 border rounded bg-white"
+      name="date-end"
+      [(ngModel)]="currentFilter.endDate"
+      (change)="verifyDate(false, $event)"
+    />
+  </div>
+  <div class="flex flex-row">
+    <app-category-selector
+      #categorySelector
+      class="flex-2 mr-1 py-5"
+      (selectedValueEmiter)="filterAllExpenses($event)"
+    ></app-category-selector>
+    <button
+      class="cursor-pointer my-auto py-2 flex-1 rounded bg-emerald-700 hover:bg-emerald-800 text-white"
+      (click)="loadFilteredExpenses()"
+    >
+      Filtrer
+    </button>
+    <button
+      class="cursor-pointer my-auto py-2 flex-1 rounded bg-red-700 hover:bg-red-800 text-white"
+      (click)="clearFilters()"
+    >
+      Clear
+    </button>
+  </div>
+</div>

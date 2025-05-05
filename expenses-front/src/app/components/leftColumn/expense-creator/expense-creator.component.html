@@ -1,0 +1,117 @@
+<button
+  (click)="showModal(creatorModal)"
+  class="px-4 py-2 bg-blue-600 text-white rounded"
+>
+  Ajouter une dépense
+</button>
+
+<div
+  #creatorModal
+  class="fixed inset-0 bg-black/90 flex items-center justify-center hidden z-50"
+  (click)="hideModal(creatorModal)"
+>
+  <div
+    class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-xl font-semibold mb-4">Création d'une dépense</h2>
+    <div class="mb-5">
+      <form
+        [formGroup]="expenseCreationForm"
+        (ngSubmit)="onSubmit(creatorModal)"
+        id="creationForm"
+        class="flex flex-col"
+      >
+        <label for="desc">Description:</label>
+        <input
+          #desc
+          formControlName="description"
+          type="input"
+          class="my-auto p-2 border rounded bg-white mb-2"
+          name="expense-description"
+          placeholder="Description de la dépense"
+        />
+        @if (expenseCreationForm.get("description")?.invalid) {
+          <small class="text-red-500">Taille max: 150 charactères</small>
+        }
+        <label for="amount">Amount:</label>
+        <input
+          #amount
+          formControlName="amount"
+          type="number"
+          class="my-auto p-2 border rounded bg-white mb-2"
+          name="expense-amount"
+          placeholder="Montant de la dépense"
+        />
+        @if (
+          expenseCreationForm.get("amount")?.invalid &&
+          expenseCreationForm.get("amount")?.touched
+        ) {
+          <small class="text-red-500"
+            >Le montant est requis et doit être numérique</small
+          >
+        }
+        <label for="category">Catégorie:</label>
+        <select
+          #category
+          formControlName="category"
+          class="my-auto p-2 border rounded bg-white mb-2"
+          name="expense-category"
+          placeholder="Choisir une catégorie"
+        >
+          @for (category of categories; track category) {
+            <option [value]="category">{{ category }}</option>
+          }
+        </select>
+        @if (
+          expenseCreationForm.get("category")?.invalid &&
+          expenseCreationForm.get("category")?.touched
+        ) {
+          <small class="text-red-500">Catégorie requise</small>
+        }
+        <label for="date">Date:</label>
+        <input
+          #date
+          formControlName="date"
+          type="date"
+          class="my-auto p-2 border rounded bg-white mb-2"
+          name="expense-date"
+          placeholder="Date de la dépense"
+        />
+        @if (
+          expenseCreationForm.get("date")?.invalid &&
+          expenseCreationForm.get("date")?.touched
+        ) {
+          <small class="text-red-500"
+            >Date requise et doit être avant/ou aujourd'hui</small
+          >
+        }
+      </form>
+
+      <div class="flex justify-end space-x-3 mt-5">
+        <button
+          (click)="hideModal(creatorModal)"
+          class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          form="creationForm"
+          [disabled]="expenseCreationForm.invalid"
+          class="cursor-not-allowed my-auto py-2 px-4 rounded text-white"
+          [ngClass]="{
+            'cursor-not-allowed': expenseCreationForm.invalid,
+            'cursor-pointer': expenseCreationForm.valid,
+            'bg-red-700': expenseCreationForm.invalid,
+            'bg-emerald-700': expenseCreationForm.valid,
+            'hover:bg-red-800': expenseCreationForm.invalid,
+            'hover:bg-emerald-800': expenseCreationForm.valid,
+          }"
+        >
+          Créer dépense
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

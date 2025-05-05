@@ -1,0 +1,8 @@
+@for (category of getAllCategories(); track category) {
+  <div>
+    {{ category }} :
+    {{ amountForCategory(category) | currency: "EUR" : "symbol" : ".2-2" }}
+  </div>
+  <br />
+}
+<div>Total : {{ total() | currency: "EUR" : "symbol" : ".2-2" }}</div>

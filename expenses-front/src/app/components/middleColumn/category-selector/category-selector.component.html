@@ -1,0 +1,9 @@
+<select
+  [(ngModel)]="selectedOption"
+  class="bg-gray-50 border text-gray-900 text-sm rounded block w-full p-2.5"
+  (change)="onCategoryChange()"
+>
+  @for (category of categories; track category) {
+    <option [value]="category">{{ category }}</option>
+  }
+</select>
